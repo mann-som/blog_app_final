@@ -9,12 +9,17 @@ from django.views.generic import (
     UpdateView,
     DeleteView)
 from .models import Post
+from django.conf import settings
+import os
+from practice.utils import log_activity
+
 
 def home(request):
     context = {
         'posts': Post.objects.all()
     }
     return render(request, 'blog_app/home.html', context)
+
 
 
 class PostListView(ListView):
@@ -46,6 +51,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        log_activity(self.request.user.username, f'{self.request.user.username} created a post')
         return super().form_valid(form)
 
 
@@ -60,6 +66,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.author:
+            log_activity(self.request.user.username, f'{self.request.user.username} updated a post')
             return True
         return False
 
@@ -70,6 +77,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.author:
+            # log_activity(self.request.user.username, f'{self.request.user.username} deleted a post')
             return True
         return False
     

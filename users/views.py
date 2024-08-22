@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .models import Profile
+from practice.utils import log_activity
 
 
 def register(request):
@@ -11,12 +13,13 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'your account has been created and now you are able to login')
+            messages.success(request, f'Account created for {username}! You can login now')
+            log_activity(username, f'Profile created for {username}')
             return redirect('login')
-
     else:
         form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form':form})
+    return render(request, 'users/register.html', {'form': form})
+
 
 
 
@@ -30,6 +33,7 @@ def profile(request):
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account is updated!')
+            log_activity(request.user.username, f'profile updated for {request.user.username}')
             return redirect('profile')
     else:
         u_form = UserUpdateForm(instance=request.user)
@@ -39,6 +43,18 @@ def profile(request):
         'p_form': p_form,
     }
     return render(request, 'users/profile.html', context)
+
+
+
+@login_required
+def delete_account(request):
+    if request.method == 'GET':
+        user = request.user
+        user.delete()
+        messages.success(request, 'Your account have been successfully deleted')
+        log_activity(user, f'profile deleted for {user.username}')
+    
+    return redirect('home-page')
  
 '''
 message.debug

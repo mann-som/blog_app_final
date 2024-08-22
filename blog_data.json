@@ -1,0 +1,38 @@
+[
+    {
+        "title": "new",
+        "content": "testing - blog json testing",
+        "author": "mannupdate",
+        "id": 8
+    },
+    {
+        "title": "test",
+        "content": "blog json testing",
+        "author": "mannupdate",
+        "id": 9
+    },
+    {
+        "title": "delete",
+        "content": "testing for deleteing in JSON",
+        "author": "mannupdate",
+        "id": 10
+    },
+    {
+        "title": "delete",
+        "content": "testing for deleting",
+        "author": "mannupdate",
+        "id": 11
+    },
+    {
+        "title": "test",
+        "content": "dummy post",
+        "author": "mannupdate",
+        "id": 13
+    },
+    {
+        "title": "dummy - 2",
+        "content": "dummy post for testing",
+        "author": "mannupdate",
+        "id": 14
+    }
+]

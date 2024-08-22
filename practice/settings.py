@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from django.conf import settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -158,3 +159,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+
+BLOG_JSON_PATH = os.path.join(settings.BASE_DIR, 'blog_data.json')
+USER_JSON_PATH = os.path.join(settings.BASE_DIR, 'user_data.json')
+LOG_JSON_PATH = os.path.join(settings.BASE_DIR, 'log_data.json')
